@@ -1,0 +1,48 @@
+version: '3.8'
+services:
+  
+  dbs:
+    build: ./sql
+    image: aparnaks/servers:postgres
+    container_name: poste
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=tomandjerry
+      - POSTGRES_DB=Server_management
+    networks: 
+      - app-network
+    ports:
+      - '5432:5432'
+  python:
+    build: ./api
+    image: aparnaks/servers:python
+    container_name: python
+    #command: python bulkload.py
+    
+    ports:
+      - 5002:5000
+    volumes:
+      - ./:/app
+    networks:
+      - app-network
+    depends_on:
+      - dbs
+    restart: always 
+  node_n:
+    build: ./Server-UI
+    image: aparnaks/servers:react
+    container_name: node_n
+    
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - 3001:3000
+    networks:
+      - app-network
+    restart: always
+
+networks:
+  app-network:
+    name: app-network
