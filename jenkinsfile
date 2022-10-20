@@ -12,7 +12,7 @@ pipeline {
     }
     stage('Prune Docker data') {
       steps {
-        bat 'docker system prune -a'     # erease all unused containers, networks, images (both dangling and unreferenced), and optionally, volumes.
+        bat 'docker system prune -a'               
       }
     }
     stage('Start container') {
@@ -35,11 +35,3 @@ pipeline {
     }
   }
 }
-// //   post {
-// //     always {
-// //       bat 'docker compose down --remove-orphans -v'
-// //       bat 'docker compose ps'
-// //     }
-// //   }
-
-// }
