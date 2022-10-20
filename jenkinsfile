@@ -17,8 +17,8 @@ pipeline {
     }
     stage('Start container') {
       steps {
-        bat 'docker compose up -d --no-color --wait'   ## you can force docker-compose not to stop and recreate the containers  
-        bat 'docker compose ps'                        ## list the containers with current status and exposed ports
+        bat 'docker compose up -d --no-color --wait'     
+        bat 'docker compose ps'                        
       }
     }
     stage('Stoping') {
