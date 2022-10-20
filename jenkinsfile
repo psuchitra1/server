@@ -12,21 +12,34 @@ pipeline {
     }
     stage('Prune Docker data') {
       steps {
-        bat 'docker system prune -a'
+        bat 'docker system prune -a'     # erease all unused containers, networks, images (both dangling and unreferenced), and optionally, volumes.
       }
     }
     stage('Start container') {
       steps {
-        bat 'docker compose up -d --no-color --wait'    
-        bat 'docker compose ps'
+        bat 'docker compose up -d --no-color --wait'   ## you can force docker-compose not to stop and recreate the containers  
+        bat 'docker compose ps'                        ## list the containers with current status and exposed ports
+      }
+    }
+    stage('Stoping') {
+      steps {
+        bat 'docker stop'   
+      }
+    }
+    stage('minikube') {
+      steps {
+        bat 'minikube start' 
+        bat 'minikube get deploy'
+        bat 'minikube get svc'
       }
     }
   }
-//   post {
-//     always {
-//       bat 'docker compose down --remove-orphans -v'
-//       bat 'docker compose ps'
-//     }
-//   }
-
 }
+// //   post {
+// //     always {
+// //       bat 'docker compose down --remove-orphans -v'
+// //       bat 'docker compose ps'
+// //     }
+// //   }
+
+// }
