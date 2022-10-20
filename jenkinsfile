@@ -30,7 +30,7 @@ pipeline {
       steps {
         bat 'minikube start' 
         bat 'minikube get deploy'
-        bat 'minikube get svc'
+        bat 'minikube get svc'  
       }
     }
   }
